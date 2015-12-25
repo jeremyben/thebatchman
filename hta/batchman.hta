@@ -4,87 +4,51 @@
 <title>Batchman</title>
 <hta:application id="app" scroll="auto" sysmenu="yes" showInTaskbar="yes" caption="yes" border="thin" icon="../icon.ico" maximizebutton="no" minimizebutton="no" navigable="yes" singleInstance="yes">
 <meta http-equiv="x-ua-compatible" content="ie=9">
-<link rel="stylesheet" href="css/lumen.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/custom.css">
-<script language="javascript">
-window.resizeTo(420,500);
-var fso = new ActiveXObject('Scripting.FileSystemObject');
-function batchman() {
-  var form = document.forms[0];
-  var batfile = form.elements['batfile'].value;
-  var distname = form.elements['distname'].value;
-  var icon = form.elements['icon'].value || false;
-  var hidcon = form.elements['hidcon'].checked;
-  if (icon && !hasExtension(icon, 'ico')) return false;
-  if (isRequired(batfile) && hasExtension(batfile, 'bat')) {
-    var src = getPath(batfile);
-    distname =  distname || src.file.replace(/\.[^/.]+$/, '');
-    fso.GetStandardStream(1).Write(src.folder +'~'+ src.file +'~'+ distname +'~'+ icon +'~'+ hidcon);
-    window.close();
-  }
-}
-function getPath(input) {
-  input = input.split('\\');
-  var file = input.pop();
-  var folder = input.join('\\');
-  return {'folder': folder, 'file': file};
-}
-function isRequired(input) {
-  if (input === null || input === '') {
-    errorFeedback('.is-required', 'Some values are required');
-    return false;
-  }
-  return true;
-}
-function hasExtension(input, extension) {
-  if (input.indexOf(extension, this.length - extension.length) == -1){
-    errorFeedback('.is-' + extension, 'Not a ' + extension + ' file');
-    return false;
-  } 
-  return true;
-}
-function errorFeedback(els, message){
-  forEachEl(els, function(el, i){
-    el.className += ' has-error has-feedback';
-    var feedback = el.querySelectorAll('.form-control-feedback')[0];
-    feedback.className = feedback.className.replace(new RegExp('(^|\\b)' + 'hide'.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
-  });
-  alert(message);
-}
-function forEachEl(selector, fn) {
-  var elements = document.querySelectorAll(selector);
-  for (var i = 0; i < elements.length; i++)
-    fn(elements[i], i);
-}
-function populate() {
-  var form = document.forms[0];
-  var folderName = fso.GetParentFolderName(form.elements['batfile'].value);
-  var folder = fso.GetFolder(folderName);
-  var files = new Enumerator(folder.files);
-  var s = '';
-  for (i=0;!files.atEnd();files.moveNext()){
-    s += files.item();
-    s += " ";
-  }
-}
-</script>
+<script language="javascript" src="js/process.js"></script>
 </head>
-<body class="pt80">
-<nav class="navbar navbar-default navbar-fixed-top">
-  <span class="navbar-brand">Batchman</span>
-  <p class="navbar-text">Batch to executable</p>
-</nav>
+<body>
+  <nav class="navbar navbar-default mb30">
+    <span class="navbar-brand">Batchman</span>
+    <p class="navbar-text">Batch to executable</p>
+  </nav>
   <div class="container-fluid">
     <div class="row">
       <div class="col-xs-12">
         <form class="form-horizontal">
+
             <div class="form-group is-required is-bat">
               <label class="col-xs-3 control-label text-right">Batch file&nbsp;<big class="text-danger">*</big></label>
               <div class="col-xs-9">
-                <input type="file" name="batfile" class="form-control input-sm" value="" onchange="populate()">
+                <input type="file" name="batfile" class="form-control input-sm" value="">
                 <span class="glyphicon glyphicon-remove form-control-feedback hide"></span>
               </div>
             </div>
+
+            <div class="form-group mb25">
+              <div class="col-xs-9 col-xs-offset-3">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" name="include">
+                    Include other files in the source folder ?
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" name="hidcon" onchange="changeCompletion()">
+                    Hide the console during execution ?
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label class="text-muted">
+                    <input type="checkbox" name="completion" disabled>
+                    Add feedback after completion ?
+                  </label>
+                </div>
+              </div>
+            </div>
+
             <div class="form-group">
               <label class="col-xs-3 control-label text-right">Filename</label>
               <div class="col-xs-9">
@@ -92,43 +56,26 @@ function populate() {
                   <input type="text" name="distname" class="form-control" value="">
                   <span class="input-group-addon">.exe</span>
                 </div>
-                <small class="help-block">If empty, use the original batch filename.</small>
+                <small class="help-block">If empty, uses the batch filename.</small>
               </div>
             </div>
-            <div class="form-group">
-              <label class="col-xs-3 control-label text-right">Files to include</label>
-              <div class="col-xs-9">
-                <select name="aha" multiple class="form-control input-sm">
-                  <!-- <option value="1">1</option>
-                  <option value="2">2</option> -->
-                </select>
-              </div>
-            </div>
+            
             <div class="form-group is-ico">
               <label class="col-xs-3 control-label text-right">Icon file</label>
               <div class="col-xs-9">
                 <input type="file" name="icon" class="form-control input-sm" value="">
-                <span class="glyphicon glyphicon-warning-sign form-control-feedback hide"></span>
+                <span class="glyphicon glyphicon-remove form-control-feedback hide"></span>
+              </div>
+            </div>
 
-              </div>
-            </div>
             <div class="form-group">
-              <div class="col-xs-9 col-xs-offset-3">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox" name="hidcon">
-                    Hide the console ?
-                  </label>
-                </div>
+              <div class="col-xs-9 col-xs-offset-3 mt20">
+                <small class="text-muted">Tanananana... </small>
+                <button type="submit" class="btn btn-sm btn-primary" onclick="batchman()">Batchman !</button>
               </div>
             </div>
-            <div class="form-group">
-              <div class="col-xs-9 col-xs-offset-3 text-center mt20">
-                <button type="submit" class="btn btn-sm btn-default" onclick="batchman()">Go Batchman !</button>
-              </div>
-            </div>
+
         </form>
-
       </div>
     </div>
   </div>
