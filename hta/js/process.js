@@ -1,4 +1,4 @@
-window.resizeTo(430,480);
+window.resizeTo(430,450);
 
 var fso = new ActiveXObject('Scripting.FileSystemObject');
 
@@ -11,7 +11,7 @@ function batchman() {
   var distname = form.elements['distname'].value;
   var icon = form.elements['icon'].value || false;
   if (icon && !hasExtension(icon, 'ico')) return false;
-  if (isRequired(batfile) && hasExtension(batfile, 'bat')) {
+  if (isRequired(batfile) && hasExtension(batfile, 'bat') && isRequired(distname)) {
     var src = splitPath(batfile);
     distname =  distname || src.file.replace(/\.[^/.]+$/, '');
     fso.GetStandardStream(1).Write(src.folder +'~'+ src.file +'~'+ include +'~'+ hidcon +'~'+ completion +'~'+ distname +'~'+ icon);
@@ -33,6 +33,13 @@ function changeCompletion() {
   }
 }
 
+function changeDistname() {
+  var form = document.forms[0];
+  var batfile = form.elements['batfile'].value;
+  var distname = form.elements['distname'];
+  distname.value = batfile.split('\\').pop().replace(/\.[^/.]+$/, '');
+}
+
 function splitPath(input) {
   input = input.split('\\');
   var file = input.pop();
@@ -42,7 +49,7 @@ function splitPath(input) {
 
 function isRequired(input) {
   if (input === null || input === '') {
-    errorFeedback('.is-required', 'Some values are required');
+    errorFeedback('.is-required', 'Missing values');
     return false;
   }
   return true;

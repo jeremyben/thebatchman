@@ -24,6 +24,7 @@ if exist "%targetexe%" del /q /f "%targetexe%"
 ::HTA completion feedback
 if "%completion%" == "true" (
 	>>%temp%\%sourcefile% echo(
+	>>%temp%\%sourcefile% echo :batchmanCompletion
 	>>%temp%\%sourcefile% echo start /wait "" mshta.exe "javascript:alert('%name% complete');close()"
 )
 
@@ -45,9 +46,8 @@ if "%hideconsole%" == "true" (
 )
 >>%sfxconfig% echo Title="%name%"
 >>%sfxconfig% echo ExtractTitle="%name%"
->>%sfxconfig% echo ExtractDialogText="%name%"
->>%sfxconfig% echo GUiflags="1+4+8+32"
->>%sfxconfig% echo GUimode="2"
+>>%sfxconfig% echo GUIFlags="2+8+512"
+>>%sfxconfig% echo GUIMode="1"
 >>%sfxconfig% echo ;!@InstallEnd@!
 
 :: 3. Create SFX

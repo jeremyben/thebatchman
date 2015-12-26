@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>Batchman</title>
-<hta:application id="app" scroll="auto" sysmenu="yes" showInTaskbar="yes" caption="yes" border="thin" icon="../icon.ico" maximizebutton="no" minimizebutton="no" navigable="yes" singleInstance="yes">
+<hta:application id="app" scroll="auto" sysmenu="yes" showInTaskbar="yes" caption="yes" border="thin" icon="../batchman_icon.ico" maximizebutton="no" minimizebutton="no" navigable="yes" singleInstance="yes">
 <meta http-equiv="x-ua-compatible" content="ie=9">
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/custom.css">
@@ -19,9 +19,9 @@
         <form class="form-horizontal">
 
             <div class="form-group is-required is-bat">
-              <label class="col-xs-3 control-label text-right">Batch file&nbsp;<big class="text-danger">*</big></label>
+              <label class="col-xs-3 control-label text-right">Batch&nbsp;File&nbsp;<big class="text-danger">*</big></label>
               <div class="col-xs-9">
-                <input type="file" name="batfile" class="form-control input-sm" value="">
+                <input type="file" name="batfile" class="form-control input-sm" value="" onchange="changeDistname()">
                 <span class="glyphicon glyphicon-remove form-control-feedback hide"></span>
               </div>
             </div>
@@ -43,25 +43,25 @@
                 <div class="checkbox">
                   <label class="text-muted">
                     <input type="checkbox" name="completion" disabled>
-                    Add feedback after completion ?
+                    Try to add feedback after completion ?
                   </label>
                 </div>
               </div>
             </div>
 
-            <div class="form-group">
-              <label class="col-xs-3 control-label text-right">Filename</label>
+            <div class="form-group is-required">
+              <label class="col-xs-3 control-label text-right">Filename&nbsp;<big class="text-danger">*</big></label>
               <div class="col-xs-9">
                 <div class="input-group input-group-sm">
                   <input type="text" name="distname" class="form-control" value="">
                   <span class="input-group-addon">.exe</span>
                 </div>
-                <small class="help-block">If empty, uses the batch filename.</small>
+                <span class="glyphicon glyphicon-remove form-control-feedback hide"></span>
               </div>
             </div>
             
             <div class="form-group is-ico">
-              <label class="col-xs-3 control-label text-right">Icon file</label>
+              <label class="col-xs-3 control-label text-right">Icon</label>
               <div class="col-xs-9">
                 <input type="file" name="icon" class="form-control input-sm" value="">
                 <span class="glyphicon glyphicon-remove form-control-feedback hide"></span>
@@ -71,7 +71,7 @@
             <div class="form-group">
               <div class="col-xs-9 col-xs-offset-3 mt20">
                 <small class="text-muted">Tanananana... </small>
-                <button type="submit" class="btn btn-sm btn-primary" onclick="batchman()">Batchman !</button>
+                <button type="submit" class="btn btn-sm btn-info" onclick="batchman()">Batchman !</button>
               </div>
             </div>
 
