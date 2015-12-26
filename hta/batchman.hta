@@ -22,7 +22,7 @@
               <label class="col-xs-3 control-label text-right">Batch&nbsp;File&nbsp;<big class="text-danger">*</big></label>
               <div class="col-xs-9">
                 <input type="file" name="batfile" class="form-control input-sm" value="" onchange="changeDistname()">
-                <span class="glyphicon glyphicon-remove form-control-feedback hide"></span>
+                <strong class="form-control-feedback hide">&#10006;</strong>
               </div>
             </div>
 
@@ -49,14 +49,14 @@
               </div>
             </div>
 
-            <div class="form-group is-required">
+            <div class="form-group is-required is-filename">
               <label class="col-xs-3 control-label text-right">Filename&nbsp;<big class="text-danger">*</big></label>
               <div class="col-xs-9">
                 <div class="input-group input-group-sm">
                   <input type="text" name="distname" class="form-control" value="">
                   <span class="input-group-addon">.exe</span>
                 </div>
-                <span class="glyphicon glyphicon-remove form-control-feedback hide"></span>
+                <strong class="form-control-feedback hide">&#10006;</strong>
               </div>
             </div>
             

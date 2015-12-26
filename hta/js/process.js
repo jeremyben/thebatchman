@@ -11,9 +11,8 @@ function batchman() {
   var distname = form.elements['distname'].value;
   var icon = form.elements['icon'].value || false;
   if (icon && !hasExtension(icon, 'ico')) return false;
-  if (isRequired(batfile) && hasExtension(batfile, 'bat') && isRequired(distname)) {
+  if (isRequired(batfile) && hasExtension(batfile, 'bat') && isRequired(distname) && isWinFilename(distname)) {
     var src = splitPath(batfile);
-    distname =  distname || src.file.replace(/\.[^/.]+$/, '');
     fso.GetStandardStream(1).Write(src.folder +'~'+ src.file +'~'+ include +'~'+ hidcon +'~'+ completion +'~'+ distname +'~'+ icon);
     window.close();
   }
@@ -60,6 +59,15 @@ function hasExtension(input, extension) {
     errorFeedback('.is-' + extension, 'Not a ' + extension + ' file');
     return false;
   } 
+  return true;
+}
+
+function isWinFilename(input) {
+  var reWinFilename =/^(?!\.)(?!com[0-9]$)(?!con$)(?!lpt[0-9]$)(?!nul$)(?!prn$)[^\|\*\?\\:<>/$"]*[^\|\*\?\\:<>/$"]+$/;
+  if (!reWinFilename.test(input)) {
+    errorFeedback('.is-filename', 'Unauthorized filename');
+    return false;
+  }
   return true;
 }
 
