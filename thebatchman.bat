@@ -1,7 +1,7 @@
 @echo off
 setlocal
 
-for /f "tokens=1-7 delims=~" %%i in ('mshta.exe "%~dp0\hta\batchman.hta"') do (
+for /f "tokens=1-7 delims=~" %%i in ('mshta.exe "%~dp0\hta\thebatchman.hta"') do (
 	set "srcdir=%%i"
 	set "srcfile=%%j"
 	set "include=%%k"
@@ -15,27 +15,30 @@ set "distexe=%srcdir%\%name%.exe"
 set "tmpfile=%temp%\%srcfile%"
 copy /y %srcdir%\%srcfile% %tmpfile%
 
-::HTA completion feedback
+:: Overwrite if executable filename exists
+if exist "%distexe%" del /q /f "%distexe%"
+
+:: HTA completion feedback
 if "%completion%" == "true" (
 	>>%tmpfile% echo(
-	>>%tmpfile% echo :batchmanCompletion
+	>>%tmpfile% echo :thebatchmanCompletion
 	>>%tmpfile% echo start /wait "" mshta.exe "javascript:alert('%name% complete');close()"
-	"%~dp0\bin\sed.exe" -e "s/goto *:eof/goto batchmanCompletion/g" <%tmpfile% >%tmpfile%_sed.tmp
+	"%~dp0\bin\sed.exe" -e "s/goto *:eof/goto thebatchmanCompletion/g" <%tmpfile% >%tmpfile%.tmp
 	del /q /f %tmpfile% 2>nul >nul
-	rename %tmpfile%_sed.tmp %srcfile%
+	rename %tmpfile%.tmp %srcfile%
 	rem sed in-place does not fully work on windows (generates backup file no matter what)
 )
 
 :: Compress files
-set "archive=%temp%\batchman_%name%.7z"
+set "archive=%temp%\thebatchman_%name%.7z"
 if "%include%" == "true" (
-	start /b /wait "Compressing" "%~dp0\bin\7za.exe" a -y %archive% "%tmpfile%" "%srcdir%\*" -x!"%srcdir%\%srcfile%"
+	start /b /wait "Compressing" "%~dp0\bin\7za.exe" a -t7z -mx1 -y %archive% "%tmpfile%" "%srcdir%\*" -x!"%srcdir%\%srcfile%"
 ) else (
-	start /b /wait "Compressing" "%~dp0\bin\7za.exe" a -y %archive% "%tmpfile%"
+	start /b /wait "Compressing" "%~dp0\bin\7za.exe" a -t7z -mx1 -y %archive% "%tmpfile%"
 )
 
 :: Create Config File
-set "sfxconfig=%temp%\batchman-config.txt"
+set "sfxconfig=%temp%\thebatchman_%name%_sfx.txt"
 >%sfxconfig% echo ;!@Install@!UTF-8!
 if "%hideconsole%" == "true" (
 	>>%sfxconfig% echo RunProgram="hidcon:%srcfile%"
@@ -50,9 +53,6 @@ if "%hideconsole%" == "true" (
 
 :: Create SFX
 copy /y /b %~dp0\bin\7zsd_LZMA2.sfx + %sfxconfig% + %archive% %temp%\%name%.tmp
-
-:: Overwrite if executable filename exists
-if exist "%distexe%" del /q /f "%distexe%"
 
 :: Add icon
 if "%icofile%" == "false" set "icofile=%~dp0\bin\default_icon.ico"

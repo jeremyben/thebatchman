@@ -2,7 +2,7 @@ window.resizeTo(430,450);
 
 var fso = new ActiveXObject('Scripting.FileSystemObject');
 
-function batchman() {
+function sendToBatch() {
   var form = document.forms[0];
   var batfile = form.elements['batfile'].value;
   var include = form.elements['include'].checked;
@@ -13,6 +13,7 @@ function batchman() {
   if (icon && !hasExtension(icon, 'ico')) return false;
   if (isRequired(batfile) && hasExtension(batfile, 'bat') && isRequired(distname) && isWinFilename(distname)) {
     var src = splitPath(batfile);
+    if (!checkOverwrite(distname, src.folder)) return false;
     fso.GetStandardStream(1).Write(src.folder +'~'+ src.file +'~'+ include +'~'+ hidcon +'~'+ completion +'~'+ distname +'~'+ icon);
     window.close();
   }
@@ -71,8 +72,23 @@ function isWinFilename(input) {
   return true;
 }
 
+function checkOverwrite(filename, filepath) {
+  var folder = fso.GetFolder(filepath);
+  var files = new Enumerator(folder.files);
+  var filesList = '';
+  for (i=0;!files.atEnd();files.moveNext()) {
+    filesList += files.item();
+    filesList += ' ';
+  }
+  var match = filesList.indexOf(filename + '.exe');
+  if (match !== -1) {
+    return confirm(filename + '.exe already exists.\nDo you want to overwrite it ?');
+  }
+  return true;
+}
+
 function errorFeedback(els, message){
-  forEachEl(els, function(el, i){
+  forEachEl(els, function(el, i) {
     el.className += ' has-error has-feedback';
     var feedback = el.querySelectorAll('.form-control-feedback')[0];
     removeClass(feedback, 'hide');
