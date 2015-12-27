@@ -9,71 +9,66 @@
 <script language="javascript" src="js/process.js"></script>
 </head>
 <body>
-  <nav class="navbar navbar-default mb30">
-    <span class="navbar-brand">The Batchman</span>
-    <p class="navbar-text">Batch to executable</p>
+  <nav class="navbar navbar-default mb10">
+    <span class="navbar-brand pt10"><img src="../thebatchman_icon.ico"></span>
+    <p class="navbar-text"><code>batch -> executable</code></p>
   </nav>
-  <div class="container-fluid">
+  <div class="container-fluid pl20 pr20">
     <div class="row">
       <div class="col-xs-12">
-        <form class="form-horizontal">
+        <form>
 
-            <div class="form-group is-required is-bat">
-              <label class="col-xs-3 control-label text-right">Batch&nbsp;File&nbsp;<big class="text-danger">*</big></label>
-              <div class="col-xs-9">
-                <input type="file" name="batfile" class="form-control input-sm" value="" onchange="changeDistname()">
-                <strong class="form-control-feedback hide">&#10006;</strong>
-              </div>
-            </div>
+          <div class="form-group is-required is-bat">
+            <label class="control-label">Batch File&nbsp;<big class="text-danger">*</big></label>
+            <input type="file" name="batfile" class="form-control input-sm" value="" onchange="changeDistname()">
+            <strong class="form-control-feedback hide">&#10006;</strong>
+          </div>
 
-            <div class="form-group mb25">
-              <div class="col-xs-9 col-xs-offset-3">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox" name="include">
-                    Include other files in the source folder ?
-                  </label>
-                </div>
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox" name="hidcon" onchange="changeCompletion()">
-                    Hide the console during execution ?
-                  </label>
-                </div>
-                <div class="checkbox">
-                  <label class="text-muted">
-                    <input type="checkbox" name="completion" disabled>
-                    Try to add feedback after completion ?
-                  </label>
-                </div>
-              </div>
+          <div class="form-group">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="include">
+                Include other files in the source folder ?
+              </label>
             </div>
+          </div>
 
-            <div class="form-group is-required is-filename">
-              <label class="col-xs-3 control-label text-right">Filename&nbsp;<big class="text-danger">*</big></label>
-              <div class="col-xs-9">
-                <div class="input-group input-group-sm">
-                  <input type="text" name="distname" class="form-control" value="">
-                  <span class="input-group-addon">.exe</span>
-                </div>
-                <strong class="form-control-feedback hide">&#10006;</strong>
-              </div>
+          <div class="form-group is-required is-filename">
+            <label class="control-label">Target Filename&nbsp;<big class="text-danger">*</big></label>
+            <div class="input-group input-group-sm">
+              <input type="text" name="distname" class="form-control" value="">
+              <span class="input-group-addon">.exe</span>
             </div>
-            
-            <div class="form-group is-ico">
-              <label class="col-xs-3 control-label text-right">Icon</label>
-              <div class="col-xs-9">
-                <input type="file" name="icon" class="form-control input-sm" value="">
-                <span class="glyphicon glyphicon-remove form-control-feedback hide"></span>
-              </div>
-            </div>
+            <strong class="form-control-feedback hide">&#10006;</strong>
+          </div>
+          
+          <div class="form-group is-ico">
+            <label class="control-label">Custom Icon</label>
+            <input type="file" name="icon" class="form-control input-sm" value="">
+            <strong class="form-control-feedback hide">&#10006;</strong>
+          </div>
 
-            <div class="form-group">
-              <div class="col-xs-9 col-xs-offset-3 mt20">
-                <small class="text-muted">Tanananana... </small>
-                <button type="submit" class="btn btn-sm btn-info" onclick="sendToBatch()">Batchman !</button>
-              </div>
+          <div class="form-group mb15 mt25">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="hidcon" onchange="changeCompletion()">
+                Hide the console when running your exe ?
+              </label>
             </div>
+            <div class="checkbox">
+              <label class="text-muted">
+                <input type="checkbox" name="completion" disabled>
+                Try to add feedback after completion ?
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-xs-11 col-xs-offset-1 mt10">
+              <small class="text-muted">Tanananana... </small>
+              <button type="submit" class="btn btn-sm btn-info" onclick="sendToBatch()">Batchman !</button>
+            </div>
+          </div>
 
         </form>
       </div>

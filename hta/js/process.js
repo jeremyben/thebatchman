@@ -1,5 +1,4 @@
-window.resizeTo(430,450);
-
+window.resizeTo(350,490);
 var fso = new ActiveXObject('Scripting.FileSystemObject');
 
 function sendToBatch() {
@@ -13,8 +12,9 @@ function sendToBatch() {
   if (icon && !hasExtension(icon, 'ico')) return false;
   if (isRequired(batfile) && hasExtension(batfile, 'bat') && isRequired(distname) && isWinFilename(distname)) {
     var src = splitPath(batfile);
+    var output = src.folder +'~'+ src.file +'~'+ include +'~'+ hidcon +'~'+ completion +'~'+ distname +'~'+ icon;
     if (!checkOverwrite(distname, src.folder)) return false;
-    fso.GetStandardStream(1).Write(src.folder +'~'+ src.file +'~'+ include +'~'+ hidcon +'~'+ completion +'~'+ distname +'~'+ icon);
+    fso.GetStandardStream(1).Write(output);
     window.close();
   }
 }
