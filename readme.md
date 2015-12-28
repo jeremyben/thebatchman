@@ -14,7 +14,8 @@ The Batchman converts Windows batch files into compressed executable files, with
 ![The Batchman Screenshot](screenshot.png)
 
 #### Holy contortion, batchman !
-The Batchman distribution is itself a batch/HTA/JS application packaged into a nice executable file right here : **[Download]()**
+The Batchman distribution is itself a batch/HTA/JS application packaged into a nice executable file right here :
+**[Download](https://github.com/jeremyben/thebatchman/releases/download/v1.0/TheBatchman.x86.zip)**
 
 ## Usage
 Simply run thebatchman.exe and fill in the form.
