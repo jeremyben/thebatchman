@@ -1,26 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta http-equiv="x-ua-compatible" content="ie=9">
+<script language="javascript">
+  var appSize = { width: 350, height: 490 };
+  window.resizeTo(appSize.width, appSize.height);
+  window.moveTo((screen.width - appSize.width) / 2, (screen.availHeight - appSize.height) / 2);
+</script>
 <title>The Batchman</title>
 <hta:application id="app" scroll="auto" sysmenu="yes" showInTaskbar="yes" caption="yes" border="thin" icon="../thebatchman_icon.ico" maximizebutton="no" minimizebutton="no" navigable="yes" singleInstance="yes">
-<meta http-equiv="x-ua-compatible" content="ie=9">
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<link rel="stylesheet" href="css/custom.css">
-<script language="javascript" src="js/process.js"></script>
+<link rel="stylesheet" href="bootstrap.min.css">
+<link rel="stylesheet" href="custom.css">
+<script language="javascript" src="process.js"></script>
 </head>
 <body>
   <nav class="navbar navbar-default mb10">
     <span class="navbar-brand pt10"><img src="../thebatchman_icon.ico"></span>
-    <p class="navbar-text"><code>batch -> executable</code></p>
+    <p class="navbar-text"><code>batch/hta -> executable</code></p>
   </nav>
   <div class="container-fluid pl20 pr20">
     <div class="row">
       <div class="col-xs-12">
         <form>
 
-          <div class="form-group is-required is-bat">
-            <label class="control-label">Batch File&nbsp;<big class="text-danger">*</big></label>
-            <input type="file" name="batfile" class="form-control input-sm" value="" onchange="changeDistname()">
+          <div class="form-group is-required is-ext">
+            <label class="control-label">Batch or HTA File&nbsp;<big class="text-danger">*</big></label>
+            <input type="file" name="srcfile" class="form-control input-sm" value="" onchange="changeDistname()">
             <strong class="form-control-feedback hide">&#10006;</strong>
           </div>
 

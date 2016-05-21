@@ -11,6 +11,7 @@ for /f "tokens=1-7 delims=~" %%i in ('mshta.exe "%~dp0\hta\thebatchman.hta"') do
 	set "icofile=%%o"
 )
 if "%srcfile%"=="" goto :eof
+start "" mshta.exe "%~dp0\hta\wait.hta"
 set "distexe=%srcdir%\%name%.exe"
 set "tmpfile=%temp%\%srcfile%"
 copy /y "%srcdir%\%srcfile%" "%tmpfile%"
@@ -22,7 +23,7 @@ if exist "%distexe%" del /q /f "%distexe%"
 if "%completion%" == "true" (
 	>>"%tmpfile%" echo(
 	>>"%tmpfile%" echo :completion
-	>>"%tmpfile%" echo start /wait "" mshta.exe "javascript:alert('%name% complete');close()"
+	>>"%tmpfile%" echo start "" mshta.exe "javascript:alert('%name% complete');close()"
 )
 
 :: Compress files with 7z

@@ -3,12 +3,12 @@
 
 > Slapping those *quick and dirty* **batch** scripts into **executable** programs, one at a time...
 
-The Batchman converts Windows batch files into compressed executable files, with the following options :
+The Batchman converts Windows batch or HTA files into compressed executable files, with the following options :
 
-+ Include files located in the folder of your batch file.
++ Include files located in the folder of your file.
 + Customize the icon.
-+ Run your executable without showing the console.
-+ If the console is hidden, add a completion feedback in the form of a dialog box.
++ Run your executable without showing the console. (for batch files)
++ If the console is hidden, add a completion feedback in the form of a dialog box. (for batch files)
 
 #### Screenshot
 ![The Batchman Screenshot](screenshot.png)
@@ -19,14 +19,14 @@ The Batchman distribution is itself a batch/HTA/JS application packaged into a n
 
 ## Usage
 Simply run thebatchman.exe and fill in the form.
-The application will **output the executable file to the same folder** where your batch file resides.
+The application will **output the executable file to the same folder** where your batch/HTA file resides.
 
 ### Options
-+ **Include all the other files located in the same folder of your batch script :**
-You you can package and use any binary or other dependency in a portable way.
-+ **Hide the console when running your executable program :**
++ **Include all the other files located in the same folder of your batch/HTA script :**
+You can package and use any binary or other dependency in a portable way.
++ **Hide the console when running your executable program (Batch) :**
 By default, running Batch scripts on Windows launches the console. Executables made with The Batchman actually run the batch script packaged inside. You have the possibility to hide the console while the executable is running.
-+ **Add a completion feedback :**
++ **Add a completion feedback (Batch) :**
 If you choose to hide the console during the execution of your program, you might want to have a feedback to know when the script has ended.
 To achieve that, The Batchman adds a label named `completion` and a few lines at the end of your batch script starting a small HTA alert box when it reaches it.
 So think of adding `goto completion` in your script instead of `goto:eof` if you want this feature to work correctly.
@@ -46,4 +46,4 @@ Tested on Windows 10 x64, but should work on every Windows up to XP SP2 (x86 or 
 This project is itself licensed under the terms of the GNU GPLv2 license.
 
 ## Notes
-This application is for "quick and dirty" purposes. Both HTA and Batch are legacy technologies, even if they're still supported on modern Windows platforms, Microsoft encourages you to use Powershell instead of Batch and WPF (or whatever it is now as you're reading this) instead of HTA for GUI.
+This application is for "quick and dirty" purposes. Both HTA and Batch are legacy technologies, even if they're still supported on modern Windows platforms.

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="x-ua-compatible" content="ie=9">
+<script language="javascript">
+  window.resizeTo(350,200);
+  window.moveTo((screen.width - 350) / 2, (screen.availHeight - 200) / 2);
+  setTimeout(function() {
+    window.close();
+  }, 2000);
+</script>
+<title>The Batchman</title>
+<hta:application id="app" scroll="auto" sysmenu="no" showInTaskbar="no" caption="yes" border="thin" icon="../thebatchman_icon.ico" maximizebutton="no" minimizebutton="no" navigable="no" singleInstance="yes">
+
+<link rel="stylesheet" href="bootstrap.min.css">
+<link rel="stylesheet" href="custom.css">
+
+</head>
+<body>
+  <nav class="navbar navbar-default mb20">
+    <span class="navbar-brand pt10"><img src="../thebatchman_icon.ico"></span>
+    <p class="navbar-text"><code>batch -> executable</code></p>
+  </nav>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12">
+        <h3 class="text-center">Please Wait...</h3>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

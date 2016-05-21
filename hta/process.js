@@ -1,17 +1,16 @@
-window.resizeTo(350,490);
 var fso = new ActiveXObject('Scripting.FileSystemObject');
 
 function sendToBatch() {
   var form = document.forms[0];
-  var batfile = form.elements['batfile'].value;
+  var srcfile = form.elements['srcfile'].value;
   var include = form.elements['include'].checked;
   var hidcon = form.elements['hidcon'].checked;
   var completion = form.elements['completion'].checked;
   var distname = form.elements['distname'].value;
   var icon = form.elements['icon'].value || false;
-  if (icon && !hasExtension(icon, 'ico')) return false;
-  if (isRequired(batfile) && hasExtension(batfile, 'bat') && isRequired(distname) && isWinFilename(distname)) {
-    var src = splitPath(batfile);
+  if (icon && !hasExtension(icon, ['ico'], true)) return false;
+  if (isRequired(srcfile) && hasExtension(srcfile, ['bat', 'hta'], true) && isRequired(distname) && isWinFilename(distname)) {
+    var src = splitPath(srcfile);
     var output = src.folder +'~'+ src.file +'~'+ include +'~'+ hidcon +'~'+ completion +'~'+ distname +'~'+ icon;
     if (!checkOverwrite(distname, src.folder)) return false;
     fso.GetStandardStream(1).Write(output);
@@ -23,7 +22,8 @@ function changeCompletion() {
   var form = document.forms[0];
   var completion = form.elements['completion'];
   var hidcon = form.elements['hidcon'];
-  if (hidcon.checked) {
+  var srcfile = form.elements['srcfile'].value;
+  if (hidcon.checked && hasExtension(srcfile, ['bat'], false)) {
     completion.disabled = false;
     removeClass(completion.parentNode, 'text-muted');
   } else {
@@ -35,9 +35,9 @@ function changeCompletion() {
 
 function changeDistname() {
   var form = document.forms[0];
-  var batfile = form.elements['batfile'].value;
+  var srcfile = form.elements['srcfile'].value;
   var distname = form.elements['distname'];
-  distname.value = batfile.split('\\').pop().replace(/\.[^/.]+$/, '');
+  distname.value = srcfile.split('\\').pop().replace(/\.[^/.]+$/, '');
 }
 
 function splitPath(input) {
@@ -55,9 +55,12 @@ function isRequired(input) {
   return true;
 }
 
-function hasExtension(input, extension) {
-  if (input.indexOf(extension, this.length - extension.length) == -1){
-    errorFeedback('.is-' + extension, 'Not a ' + extension + ' file');
+function hasExtension(input, extensions, feedback) {
+  var hasOne = extensions.filter(function(value){
+    return input.indexOf(value, this.length - value.length) > -1
+  })
+  if (!hasOne[0]){
+    if (feedback) errorFeedback('.is-ext', 'Not a ' + extensions + ' file');
     return false;
   } 
   return true;
