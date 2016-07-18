@@ -1,7 +1,7 @@
 @echo off
 setlocal
 
-for /f "tokens=1-7 delims=~" %%i in ('mshta.exe "%~dp0\hta\thebatchman.hta"') do (
+for /f "tokens=1-8 delims=~" %%i in ('mshta.exe "%~dp0\hta\thebatchman.hta"') do (
 	set "srcdir=%%i"
 	set "srcfile=%%j"
 	set "include=%%k"
@@ -9,6 +9,7 @@ for /f "tokens=1-7 delims=~" %%i in ('mshta.exe "%~dp0\hta\thebatchman.hta"') do
 	set "completion=%%m"
 	set "name=%%n"
 	set "icofile=%%o"
+	set "upx=%%p"
 )
 if "%srcfile%"=="" goto :eof
 start "" mshta.exe "%~dp0\hta\wait.hta"
@@ -58,7 +59,9 @@ start /b /wait "Resourcer" "%~dp0\bin\resourcer.exe" -op:add -src:"%temp%\%name%
 copy /b /y "%temp%\%name%.icx" + "%temp%\%name%.tmp" "%distexe%"
 
 :: Compress executable with UPX
-start /b /wait "Compressing" "bin\upx.exe" -1 -q "%distexe%"
+if "%upx%" == "true" (
+	start /b /wait "Compressing" "bin\upx.exe" -1 -q "%distexe%"
+)
 
 :: Cleaning
 if exist "%sfxconfig%" del /q /f "%sfxconfig%"

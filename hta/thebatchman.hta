@@ -3,9 +3,11 @@
 <head>
 <meta http-equiv="x-ua-compatible" content="ie=9">
 <script language="javascript">
-  var appSize = { width: 350, height: 490 };
+(function () {
+  var appSize = { width: 350, height: 520 };
   window.resizeTo(appSize.width, appSize.height);
   window.moveTo((screen.width - appSize.width) / 2, (screen.availHeight - appSize.height) / 2);
+})()
 </script>
 <title>The Batchman</title>
 <hta:application id="app" scroll="auto" sysmenu="yes" showInTaskbar="yes" caption="yes" border="thin" icon="../thebatchman_icon.ico" maximizebutton="no" minimizebutton="no" navigable="yes" singleInstance="yes">
@@ -53,11 +55,20 @@
             <strong class="form-control-feedback hide">&#10006;</strong>
           </div>
 
-          <div class="form-group mb15 mt25">
+          <div class="form-group mt20 mb15">
             <div class="checkbox">
               <label>
-                <input type="checkbox" name="hidcon" onchange="changeCompletion()">
-                Hide the console when running your exe ?
+                <input type="checkbox" name="upx">
+                Compress the exe with UPX ?
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group mb15">
+            <div class="checkbox">
+              <label class="text-muted">
+                <input type="checkbox" name="hidcon" onchange="changeCompletion()" disabled>
+                Hide the console when running the exe ?
               </label>
             </div>
             <div class="checkbox">
