@@ -14,8 +14,8 @@ The Batchman converts Windows batch or HTA files into compressed executable file
 ![The Batchman Screenshot](screenshot.png)
 
 #### Holy contortion, batchman !
-The Batchman distribution is itself a batch/HTA/JS application packaged into a nice executable file right here :
-**[Download](https://github.com/jeremyben/thebatchman/releases/download/v1.2/TheBatchman.x86.zip)**
+The Batchman distribution is itself a HTA/JS application packaged into a nice executable file right here :
+**[Download](https://github.com/jeremyben/thebatchman/releases/download/v1.3/TheBatchman.x86.zip)**
 
 ## Usage
 Simply run thebatchman.exe and fill in the form.
@@ -40,7 +40,6 @@ Tested on Windows 10 x64, but should work on every Windows up to XP SP2 (x86 or 
 + [7-zip modified SFX modules](http://7zsfx.info/en/) 1.6 (under GNU LGPL)
 + [Anolis Resourcer](http://anolis.codeplex.com/) 0.9 (under GNU GPLv2)
 + [UPX](http://upx.sourceforge.net/) 3.91 (under GNU GPL)
-+ [sed for Windows](http://gnuwin32.sourceforge.net/packages/sed.htm) 4.2.1 (under GNU GPL)
 + [Bootstrap](http://getbootstrap.com/) 3.3.5 (under MIT)
 
 This project is itself licensed under the terms of the GNU GPLv2 license.

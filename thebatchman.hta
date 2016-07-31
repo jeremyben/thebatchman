@@ -5,19 +5,21 @@
 <script language="javascript">
 (function () {
   var appSize = { width: 350, height: 520 };
+  var appSize = { width: 350, height: 760 };
   window.resizeTo(appSize.width, appSize.height);
   window.moveTo((screen.width - appSize.width) / 2, (screen.availHeight - appSize.height) / 2);
 })()
 </script>
 <title>The Batchman</title>
-<hta:application id="app" scroll="auto" sysmenu="yes" showInTaskbar="yes" caption="yes" border="thin" icon="../thebatchman_icon.ico" maximizebutton="no" minimizebutton="no" navigable="yes" singleInstance="yes">
-<link rel="stylesheet" href="bootstrap.min.css">
-<link rel="stylesheet" href="custom.css">
-<script language="javascript" src="process.js"></script>
+<hta:application id="app" scroll="auto" sysmenu="yes" showInTaskbar="yes" caption="yes" border="thin" icon="assets/thebatchman_icon.ico" maximizebutton="no" minimizebutton="no" navigable="yes" singleInstance="yes">
+<link rel="stylesheet" href="assets/bootstrap.min.css">
+<link rel="stylesheet" href="assets/custom.css">
+<script language="javascript" src="assets/htaconsole.js"></script>
+<script language="javascript" src="assets/process.js"></script>
 </head>
 <body>
   <nav class="navbar navbar-default mb10">
-    <span class="navbar-brand pt10"><img src="../thebatchman_icon.ico"></span>
+    <span class="navbar-brand pt10"><img src="assets/thebatchman_icon.ico"></span>
     <p class="navbar-text"><code>batch/hta -> executable</code></p>
   </nav>
   <div class="container-fluid pl20 pr20">
@@ -82,7 +84,7 @@
           <div class="form-group">
             <div class="col-xs-11 col-xs-offset-1 mt10">
               <small class="text-muted">Tanananana... </small>
-              <button type="submit" class="btn btn-sm btn-info" onclick="sendToBatch()">Batchman !</button>
+              <a class="btn btn-sm btn-info" onclick="doIt()">Batchman !</a>
             </div>
           </div>
 
