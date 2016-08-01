@@ -4,17 +4,15 @@
 <meta http-equiv="x-ua-compatible" content="ie=9">
 <script language="javascript">
 (function () {
-  var appSize = { width: 350, height: 520 };
-  var appSize = { width: 350, height: 760 };
-  window.resizeTo(appSize.width, appSize.height);
-  window.moveTo((screen.width - appSize.width) / 2, (screen.availHeight - appSize.height) / 2);
+  var appSize = { width: 350, height: 520 }
+  window.resizeTo(appSize.width, appSize.height)
+  window.moveTo((screen.width - appSize.width) / 2, (screen.availHeight - appSize.height) / 2)
 })()
 </script>
 <title>The Batchman</title>
 <hta:application id="app" scroll="auto" sysmenu="yes" showInTaskbar="yes" caption="yes" border="thin" icon="assets/thebatchman_icon.ico" maximizebutton="no" minimizebutton="no" navigable="yes" singleInstance="yes">
 <link rel="stylesheet" href="assets/bootstrap.min.css">
 <link rel="stylesheet" href="assets/custom.css">
-<script language="javascript" src="assets/htaconsole.js"></script>
 <script language="javascript" src="assets/process.js"></script>
 </head>
 <body>
@@ -58,16 +56,8 @@
           </div>
 
           <div class="form-group mt20 mb15">
-            <div class="checkbox">
-              <label>
-                <input type="checkbox" name="upx">
-                Compress the exe with UPX ?
-              </label>
-            </div>
-          </div>
-
-          <div class="form-group mb15">
-            <div class="checkbox">
+            <label class="control-label">Batch Options</label>
+            <div class="checkbox mt0">
               <label class="text-muted">
                 <input type="checkbox" name="hidcon" onchange="changeCompletion()" disabled>
                 Hide the console when running the exe ?

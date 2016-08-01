@@ -1,5 +1,5 @@
 # The Batchman 
-<img src="thebatchman_icon.ico" alt="The Batchman Logo" width="64">
+<img src="assets/thebatchman_icon.ico" alt="The Batchman Logo" width="64">
 
 > Slapping those *quick and dirty* **batch** scripts into **executable** programs, one at a time...
 
@@ -11,7 +11,7 @@ The Batchman converts Windows batch or HTA files into compressed executable file
 + If the console is hidden, add a completion feedback in the form of a dialog box. (for batch files)
 
 #### Screenshot
-![The Batchman Screenshot](screenshot.png)
+![The Batchman Screenshot](assets/screenshot.png)
 
 #### Holy contortion, batchman !
 The Batchman distribution is itself a HTA/JS application packaged into a nice executable file right here :
@@ -39,7 +39,6 @@ Tested on Windows 10 x64, but should work on every Windows up to XP SP2 (x86 or 
 + [7-zip command-line](http://www.7-zip.org/) 15.12 (under GNU LGPL)
 + [7-zip modified SFX modules](http://7zsfx.info/en/) 1.6 (under GNU LGPL)
 + [Anolis Resourcer](http://anolis.codeplex.com/) 0.9 (under GNU GPLv2)
-+ [UPX](http://upx.sourceforge.net/) 3.91 (under GNU GPL)
 + [Bootstrap](http://getbootstrap.com/) 3.3.5 (under MIT)
 
 This project is itself licensed under the terms of the GNU GPLv2 license.
