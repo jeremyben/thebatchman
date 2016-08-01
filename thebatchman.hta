@@ -4,7 +4,7 @@
 <meta http-equiv="x-ua-compatible" content="ie=9">
 <script language="javascript">
 (function () {
-  var appSize = { width: 350, height: 520 }
+  var appSize = { width: 350, height: 510 }
   window.resizeTo(appSize.width, appSize.height)
   window.moveTo((screen.width - appSize.width) / 2, (screen.availHeight - appSize.height) / 2)
 })()
@@ -79,6 +79,15 @@
           </div>
 
         </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal">
+    <div id="modal-content">
+      <div id="modal-btns" class="text-center mt20">
+        <a class="btn btn-info" onclick="location.reload()">New file</a>
+        <a class="btn btn-default" onclick="window.close()">Exit</a>
       </div>
     </div>
   </div>

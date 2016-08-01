@@ -1,6 +1,5 @@
 var fso = new ActiveXObject('Scripting.FileSystemObject')
 var wsh = new ActiveXObject('WScript.Shell')
-var sa = new ActiveXObject('Shell.Application')
 var stream = new ActiveXObject("ADODB.Stream")
 
 function doIt() {
@@ -11,6 +10,9 @@ function doIt() {
   var completion = form.elements['completion'].checked
   var distname = form.elements['distname'].value
   var icon = form.elements['icon'].value || 'assets\\default_icon.ico'
+  var modal = document.getElementById('modal')
+  var modalContent = document.getElementById('modal-content')
+  var modalBtns = document.getElementById('modal-btns')
   
   if (isRequired(srcfile) && hasExtension(srcfile, ['bat', 'hta'], true) && isRequired(distname) && isWinFilename(distname)) {
     var src = splitPath(srcfile)
@@ -25,27 +27,35 @@ function doIt() {
     if (!hasExtension(icon, ['ico'], true)) return false
     if (!overwrite(distname + '.exe', src.folder)) return false
 
+    modal.style.display = 'block'
+    log('Processing...', modalContent, modalBtns)
+
     // HTA completion feedback and copy to temp directory
     stream.CharSet = 'utf-8'
     stream.Open()
     stream.LoadFromFile(srcfile)
     if (completion) {
-      var content = stream.ReadText()
-      content += '\nstart "" mshta.exe javascript:alert("'+ distname +' complete");close()'
-      stream.Flush()
-      stream.WriteText(content)
+      log('Adding completion line...', modalContent, modalBtns)
+      var srcContent = stream.ReadText()
+      stream.Close()
+      stream.Open()
+      srcContent += '\nstart "" mshta.exe javascript:alert("'+ distname +' complete");close()'
+      stream.WriteText(srcContent)
     }
     stream.saveToFile(tempfile, 2)
     stream.Close()
-
+    
     // Compress
     if (include) {
-      wsh.Run('bin\\7za.exe a -t7z -mx1 -y ' + archive + ' ' + tempfile + ' ' + src.folder + '\\* -x!' + srcfile, 0, true)
+      log('Compressing all files...', modalContent, modalBtns)
+      wsh.Run('bin\\7za.exe a -t7z -mx1 -y "' + archive + '" "' + tempfile + '" "' + src.folder + '\\*" -x!"' + srcfile +'"', 0, true)
     } else {
-      wsh.Run('bin\\7za.exe a -t7z -mx1 -y ' + archive + ' ' + tempfile, 0, true)
+      log('Compressing...', modalContent, modalBtns)
+      wsh.Run('bin\\7za.exe a -t7z -mx1 -y "' + archive + '" "' + tempfile +'"', 0, true)
     }
 
     // Create Config File for SFX
+    log('Converting to executable...', modalContent, modalBtns)
     var sfxfile = tempdir + '\\' + 'thebatchman_' + distname + '_sfx.txt'
     var sfxconfig = ';!@Install@!UTF-8!'
     if (hidcon) sfxconfig += '\nRunProgram="hidcon:'+ src.file +'"'
@@ -64,29 +74,24 @@ function doIt() {
     binaryCopy(['bin\\7zsd_LZMA2.sfx', sfxfile, archive], disttemp)
 
     // Add Icon and Finalize
+    log('Adding icon...', modalContent, modalBtns)
     binaryCopy([disttemp], disticx)
     wsh.Run('bin\\resourcer.exe -op:add -src:"'+ disticx +'" -type:icon -name:name -lang:1033 -file:"'+ icon +'"', 0, true)
     binaryCopy([disticx, disttemp], distexe)
 
+    // Clean
+    log('Cleaning...', modalContent, modalBtns)
     fso.DeleteFile(tempfile)
     fso.DeleteFile(disticx)
     fso.DeleteFile(disttemp)
     fso.DeleteFile(archive)
     fso.DeleteFile(sfxfile)
-    alert('Done !')
-    // window.close()
+    log('Done !', modalContent, modalBtns)
+    log('<span>'+ distexe +'</span>', modalContent, modalBtns)
+    modalBtns.style.display = 'block'
   } else {
     location.reload()
   }
-
-  // var exe = wsh.exec(cmd)
-  // var out = ''
-  // while (!exe.stdOut.atEndOfStream) {
-  //   var s = exe.stdOut.readLine()
-  //   s = s.replace( /\r/gm, '' )
-  //   out += s + '\n'
-  // }
-  // document.getElementById("output").value = out
   
 }
 
@@ -213,4 +218,14 @@ function forEachEl(selector, fn) {
 
 function removeClass(el, classToRemove) {
   el.className = el.className.replace(new RegExp('(^|\\b)' + classToRemove.split(' ').join('|') + '(\\b|$)', 'gi'), ' ')
+}
+
+function log(message, parent, before) {
+  var p = document.createElement('p')
+  p.innerHTML = message
+  if (before) {
+    parent.insertBefore(p, before)
+  } else {
+    parent.appendChild(p)
+  }
 }

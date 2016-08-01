@@ -36,7 +36,7 @@ So think of adding `goto completion` in your script instead of `goto:eof` if you
 Tested on Windows 10 x64, but should work on every Windows up to XP SP2 (x86 or x64), as long as you have Internet Explorer 8 or more recent.
 
 ## Included dependencies and licensing
-+ [7-zip command-line](http://www.7-zip.org/) 15.12 (under GNU LGPL)
++ [7-zip command-line](http://www.7-zip.org/) 16.02 (under GNU LGPL)
 + [7-zip modified SFX modules](http://7zsfx.info/en/) 1.6 (under GNU LGPL)
 + [Anolis Resourcer](http://anolis.codeplex.com/) 0.9 (under GNU GPLv2)
 + [Bootstrap](http://getbootstrap.com/) 3.3.5 (under MIT)
