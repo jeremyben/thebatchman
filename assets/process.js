@@ -14,7 +14,7 @@ function doIt() {
   var modalContent = document.getElementById('modal-content')
   var modalBtns = document.getElementById('modal-btns')
   
-  if (isRequired(srcfile) && hasExtension(srcfile, ['bat', 'hta'], true) && isRequired(distname) && isWinFilename(distname)) {
+  if (isRequired(srcfile) && hasExtension(srcfile, ['bat', 'cmd', 'hta'], true) && isRequired(distname) && isWinFilename(distname)) {
     var src = splitPath(srcfile)
     var tempdir = wsh.ExpandEnvironmentStrings("%TEMP%")
     var tempfile = tempdir + '\\' + src.file
